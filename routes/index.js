@@ -1,19 +1,26 @@
 var express = require('express');
 var router = express.Router();
+router.use(express.urlencoded({extended:true}));
 
 
 const userModel=require("./users");
 const postModel=require("./post");
 const passport=require("passport");
 const localStrategy=require("passport-local");
-passport.authenticate(new localStrategy(userModel.authenticate()));
+passport.use(new localStrategy(userModel.authenticate()));
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
+router.get("/login",(req,res)=>{
+  res.render("login");
+})
 
+router.get("/feed",(req,res)=>{
+  res.render("feed");
+})
 router.get("/profile", isLoggedIN,(req,res)=>{
   res.send("welcome to Profile");
 })
@@ -26,13 +33,13 @@ router.post("/register",(req,res)=>{
   })
 
   userModel.register(obj,req.body.password).then(function (){
-    password.authenticate("local")(req,res,()=>{
+    passport.authenticate("local")(req,res,()=>{
       res.redirect("/profile");
     })
   })
 })
 
-router.post("/login",passport.authenticate("loacl",{
+router.post("/login",passport.authenticate("local",{
   successRedirect:"/profile",
   failureRedirect:"/"
 }),(req,res)=>{

@@ -11,8 +11,7 @@ const userSchema=mongoose.Schema({
     unique:true
   },
   password:{
-    type:String,
-    required:true,
+    type:String
   },
   email:{
     type:String,

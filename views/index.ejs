@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>login Page</title>
 </head>
-<link rel="stylesheet" href="../stylesheets/style.css">
+<link rel="stylesheet" href="/stylesheets/style.css">
 
 <body>
   <div class="container">
@@ -13,15 +13,13 @@
       <!--pinterest logo-->
       <img src="https://i.pinimg.com/originals/d3/d1/75/d3d175e560ae133f1ed5cd4ec173751a.png" alt="pin logo" class="img1" />
       <p class="header">Log in to see more</p>
-
+      <form action="/register" method="post">
       <input type="email" name="email" placeholder="Email" class="detail" /><br />
       <input type="text" name="username" placeholder="Username" class="detail" /><br />
       <input type="text" name="fullname" placeholder="Full Name" class="detail" /><br />
-      <input type="password" name="password" placeholder="Password" class="detail" />
-
-      <h4>Forgot your password?</h4>
-
-      <button class="btn int">Log in</button>
+      <input type="password" name="password" placeholder="Password" class="detail" /><br/>
+      <input type="submit" class="btn int" value="Register">
+      </form>
       <p class="or">OR</p>
       <button class="btn fbk">
         <i
@@ -43,12 +41,11 @@
           By continuing, you agree to Pinterest's
           <b>Terms of Service, Privacy policy.</b>
         </p>
-        <hr />
-        <p>Not on Pinterest yet? Sign up</p>
+        <a href="/login"> Already On Pintrest ? Login</a>
+        
       </footer>
     </div>
   </div>
-  <a href="" class="upbtn">Sign up</a>
 
 </body>
 </html>
