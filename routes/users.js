@@ -20,6 +20,7 @@ const userSchema=mongoose.Schema({
   },
   dp:{
     type:String,
+    default:"https://www.shutterstock.com/shutterstock/photos/561472912/display_1500/stock-vector-account-add-contact-create-friend-new-user-icon-561472912.jpg"
   },
   fullname:{
     type:String,

@@ -7,7 +7,10 @@ const storage=multer.diskStorage({
     },
     filename:function(req,file,cb){
         const UniqueFilename=uuidv4();
-        cb(null,UniqueFilename);
+        let ext=file.mimetype.split('/')[1];
+        // console.log(file);
+        // console.log(ext);
+        cb(null,UniqueFilename+"."+ext);
     }
 })
 

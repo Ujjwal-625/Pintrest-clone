@@ -12,12 +12,29 @@ const upload=require("./multer");
 
 /* GET home page. */
 //handling the routes for uploading the file to the server
-router.post("/upload",upload.single("post"),(req,res)=>{
-  if(!req.post){
-    return res.status(400).send("no files were uploaded");
+router.post("/upload",isLoggedIN,upload.single("post"),async(req,res)=>{
+  if(!req.file){
+  return res.status(400).send("NO file were uploaded");
   }
-  res.send("file uploaded succefully");
+  // else{
+  //   res.redirect("/profile"); We don't need this to do
+  // }
+  //now we will link post with user and vice versa
+  const user=await userModel.findOne({username:req.session.passport.user})
+  const postData=await postModel.create({
+    caption:req.body.caption,
+    user:user._id,
+    image:req.file.filename//it will contain the new uniqu name of the image
+  })
+
+  // now we will add post id in post array of user 
+  user.post.push(postData._id);
+  await user.save();
+  console.log("done");
+  res.redirect("/profile");
 })
+
+
 
 
 router.get('/', function(req, res, next) {
@@ -27,6 +44,9 @@ router.get('/', function(req, res, next) {
 router.get("/feed",isLoggedIN,(req,res)=>{
   res.render("feed");
 })
+
+
+
 router.get("/login",(req,res)=>{
  // console.log(req.flash("error"));// now it will show what is the error
  if(req.isAuthenticated()){
@@ -39,28 +59,36 @@ router.get("/login",(req,res)=>{
 router.get("/profile", isLoggedIN,async(req,res)=>{
   const user=await userModel.findOne({
     username:req.session.passport.user  //jab hum login ho jate hai to isme humara username aa jata hai
-  })
+  }).populate("post");
   res.render("profile",{user:user});
 })
 
-router.post("/register",(req,res)=>{
-  let obj=new userModel({
-    username:req.body.username,
-    email:req.body.email,
-    fullname:req.body.fullname,
-  })
+router.post("/register", (req, res) => {
+  // Check if all required fields are provided
+  if (!req.body.username || !req.body.email || !req.body.fullname || !req.body.password) {
+    req.flash("error", "Missing credentials"); // Flash message for missing fields
+    return res.redirect("/");
+  }
 
-  userModel.register(obj,req.body.password).then(function (){
-    passport.authenticate("local")(req,res,()=>{
-      res.redirect("/profile");
+  let obj = new userModel({
+    username: req.body.username,
+    email: req.body.email,
+    fullname: req.body.fullname,
+  });
+
+  userModel.register(obj, req.body.password)
+    .then(() => {
+      passport.authenticate("local")(req, res, () => {
+        res.redirect("/profile");
+      });
     })
-  })
-  .catch(err=>{
-    // console.log(err);
-    req.flash("error","Username or Email Exist Choose diffrent one");
-    res.redirect("/");
-  })
-})
+    .catch(err => {
+      req.flash("error", "Username or Email already exists. Please choose a different one.");
+      res.redirect("/");
+    });
+});
+
+
 
 router.post("/login",passport.authenticate("local",{
   successRedirect:"/profile",
@@ -79,6 +107,7 @@ router.get('/logout',(req,res,next)=>{
     }
   })
 })
+
 
 function isLoggedIN(req,res,next){
   if(req.isAuthenticated()){

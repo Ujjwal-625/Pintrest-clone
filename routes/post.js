@@ -3,14 +3,14 @@ const mongoose=require("mongoose");
 mongoose.connect("mongodb://127.0.0.1:27017/pintrest-clone");
 
 const postSchema=mongoose.Schema({
-    postData:{
+    caption:{
         type:String,
         required:true,
     },
-    like:{
-        type:Array,//we will store the id of the user who liked the post
-        default:[],
-    },
+    // like:{
+    //     type:Array,//we will store the id of the user who liked the post
+    //     default:[],
+    // },
     postDate:{
         type:Date,
         default:Date.now,
@@ -18,6 +18,9 @@ const postSchema=mongoose.Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
+    },
+    image:{
+        type:String
     }
 })
 
