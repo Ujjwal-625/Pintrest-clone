@@ -9,6 +9,7 @@ const passport=require("passport");
 const localStrategy=require("passport-local");
 passport.use(new localStrategy(userModel.authenticate()));
 const upload=require("./multer");
+const upload1=require("./multer2");
 
 /* GET home page. */
 //handling the routes for uploading the file to the server
@@ -88,7 +89,16 @@ router.post("/register", (req, res) => {
     });
 });
 
-
+//update profile image
+router.post("/update",isLoggedIN,upload1.single("dp"),async(req,res)=>{
+  if(!req.file){
+    return res.status(400).send("No file were uploaded");
+  }
+  const user=await userModel.findOne({username:req.session.passport.user})
+  user.dp="/images/dp/"+req.file.filename;
+  await user.save();
+  res.redirect("/profile")
+})
 
 router.post("/login",passport.authenticate("local",{
   successRedirect:"/profile",

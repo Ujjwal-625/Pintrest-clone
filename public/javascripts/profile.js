@@ -1,18 +1,12 @@
-// function AddPost(){
-//     const inputFile=document.getElementById("post");
-//     inputFile.click();
-//     inputFile.addEventListener("change",()=>{
-//         document.getElementById("postform").submit();
-//     })
-// }
+const btn=document.getElementById("update-btn");
 
-function ShowPost(obj){
-    const container=document.querySelector(".container");
-    const card=document.createElement("div");
-    card.classList("card");
+btn.addEventListener("click",updateImage);
+
+function updateImage(){
+    const inputFile=document.getElementById("dp");
+    inputFile.click();
+    inputFile.addEventListener("change",()=>{
+        document.getElementById("dpform").submit();
+    })
 }
 
-window.onload=()=>{
-    console.log("Document loaded");
-    
-}

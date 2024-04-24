@@ -71,4 +71,26 @@ body {
     justify-content:center;
   }
   
+  .profile-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .image-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  #update-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+  }
+  
+  .image-container:hover #update-btn {
+    display: block;
+  }
+  
  

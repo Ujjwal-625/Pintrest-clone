@@ -13,9 +13,17 @@
       <a href="/logout" class="button position-absolute top-0 end-0 m-3">Logout</a>
     </div>
     <div class="cardProfile">
-      <div class="profile-picture">
-        <img src="<%=user.dp%>" alt="Profile Picture">
+
+
+      <div class="image-container profile-picture">
+        <img src="<%=user.dp%>" alt="Profile Image" id="profile-img">
+        <form action="/update" id="dpform" method="post" enctype="multipart/form-data">
+          <input type="file" name="dp" id="dp" hidden/>
+        </form>
+        <button id="update-btn">Update Image</button>
       </div>
+
+
       <h2 class="name"><%=user.fullname%></h2>
       <h3 class="username"><%=user.username%></h3>
       <h3 class="name">Posts<%=user.post.length%></h3>
