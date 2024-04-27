@@ -10,6 +10,7 @@ const localStrategy=require("passport-local");
 passport.use(new localStrategy(userModel.authenticate()));
 const upload=require("./multer");
 const upload1=require("./multer2");
+const imageLoader=require("./imageLoad");
 
 /* GET home page. */
 //handling the routes for uploading the file to the server
@@ -42,8 +43,14 @@ router.get('/', function(req, res, next) {
   res.render('index',{err:req.flash("error")});//same concept as done for login route
 });
 
-router.get("/feed",isLoggedIN,(req,res)=>{
-  res.render("feed");
+router.get("/feed",isLoggedIN,async(req,res)=>{
+  //creating an array of image url
+  let imgurl=[];
+  for(let i=0;i<25;i++){
+    imgurl[i]=await imageLoader();
+  }
+  console.log(imgurl);
+  res.render("feed",{img: imgurl});
 })
 
 
