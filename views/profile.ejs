@@ -41,7 +41,7 @@
 
   <div class="container flex" >
     <% user.post.forEach((ele)=>{%>
-    <div class="card " style="width:18rem; margin:3px;">
+    <div id="/images/uploads/<%=ele.image%>" class="card"style="width:18rem; margin:3px; cursor:pointer" onClick="showimage('/images/uploads/<%=ele.image%>')">
         <img src="/images/uploads/<%=ele.image%>" class="card-img-top" alt="...">
         <div class="card-body">
           <h5 class="card-title"><%=ele.caption%></h5>

@@ -1,11 +1,12 @@
-async function Image(){
-    let img=await fetch("https://random.imagecdn.app/500/150")
-    if(!img.ok){
-        console.log("error");
+const axios = require('axios').default;
+const imageArray = async () => {
+    try {
+        const list = await axios.get('https://picsum.photos/v2/list?page=2&limit=50');
+        const data = await list.data;
+        //console.log(data);
+        return data;
+    } catch (err) {
+        console.log(err);
     }
-    let imageblob=await img.blob();
-    const imageurl =URL.createObjectURL(imageblob);
-    return imageurl;
 }
-
-module.exports= Image;
+module.exports=imageArray;

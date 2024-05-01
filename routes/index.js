@@ -5,6 +5,7 @@ router.use(express.urlencoded({extended:true}));
 
 const userModel=require("./users");
 const postModel=require("./post");
+const userCollection=require("./collections");
 const passport=require("passport");
 const localStrategy=require("passport-local");
 passport.use(new localStrategy(userModel.authenticate()));
@@ -36,21 +37,37 @@ router.post("/upload",isLoggedIN,upload.single("post"),async(req,res)=>{
   res.redirect("/profile");
 })
 
-
-
-
 router.get('/', function(req, res, next) {
   res.render('index',{err:req.flash("error")});//same concept as done for login route
 });
 
+router.get("/loadmore", async (req, res) => {
+  try {
+      let imgurl = await imageLoader();
+      if (imgurl) {
+          res.status(200).send(imgurl);
+      } else {
+          res.status(400).send("something went wrong");
+      }
+  } catch (error) {
+      console.error("Error:", error);
+      res.status(500).send("Internal Server Error");
+  }
+});
+
+
 router.get("/feed",isLoggedIN,async(req,res)=>{
   //creating an array of image url
-  let imgurl=[];
-  for(let i=0;i<25;i++){
-    imgurl[i]=await imageLoader();
-  }
-  console.log(imgurl);
+  let imgurl=await imageLoader();
+  //console.log(imgurl);
+//  console.log(Object.keys(imgurl))
+//  console.log(Object.values(imgurl))
+// for(ele in imgurl){
+//   console.log(ele);
+//   console.log(imgurl[ele]);
+// }
   res.render("feed",{img: imgurl});
+  //res.end();
 })
 
 
@@ -115,6 +132,12 @@ router.post("/login",passport.authenticate("local",{
 
 })
 
+
+router.get("/images/uploads/:img",isLoggedIN,(req,res)=>{
+  console.log("called");
+  res.status(200).send("logged in");
+})
+
 router.get('/logout',(req,res,next)=>{
   req.logOut(function(err){
     if(err){
@@ -131,6 +154,7 @@ function isLoggedIN(req,res,next){
     next();
   }
   else{
+    console.log("Not logged in");
     res.redirect("/");
   }
 }

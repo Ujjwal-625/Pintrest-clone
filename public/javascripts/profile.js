@@ -10,3 +10,12 @@ function updateImage(){
     })
 }
 
+async function showimage(img){
+    // window.location.href="localhost:3000"+img;
+    let res=await fetch(img);
+    console.log(res.status);
+    if(res.status==200)
+    window.location.href=res.url;
+    else 
+    window.location.href="localhost:3000/login";
+}

@@ -4,7 +4,7 @@
   padding: 0;
 	background-color: #262626;
   box-sizing: border-box;
-  font-family: "Gill Sans", "Gill Sans MT", "Myriad          Pro", "DejaVu Sans Condensed", Helvetica, Arial,        "sans-serif";
+  font-family: "Gill Sans", "Gill Sans MT", "Myriad          Pro", "DejaVu Sans Condensed", Helvetica, Arial,        "sans-serif"; 
 }
 
 
@@ -142,3 +142,6 @@ img:hover {
     columns: 1;
   }
 }
+
+
+/* hover functionality on the image  */
