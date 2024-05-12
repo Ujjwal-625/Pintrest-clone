@@ -11,11 +11,11 @@
     <body style="background-color: #262626;">
     <div class="container">    
         <%for(ele in img){%>
-            <a style="text-decoration: none;" class="box" href="<%=img[ele].download_url%>">
+            <div style="cursor:pointer" class="box" >
                 <img src="<%=img[ele].download_url%>" alt="error in fetcching image">
                 
             <div class="caption"> <%=img[ele].author%> </div>
-            </a> 
+            </div> 
         <%}%>
     </div>
     <div id="btndiv" style="text-align: center;">
