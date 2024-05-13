@@ -2,26 +2,39 @@
 
 const img=document.querySelectorAll(".box");
 img.forEach(image => {
-    const addbtn=document.createElement("button");
-    const imgbtn=document.createElement("button");
-    addbtn.innerText="Add To collection";
-    imgbtn.innerText="Open image";
+    const buttonsList = document.createElement("div");
+    buttonsList.style.display = "flex"; // To arrange the buttons horizontally
+
+    const addbtn = document.createElement("button");
+    const imgbtn = document.createElement("button");
+    addbtn.setAttribute("class", "addbtn");
+    imgbtn.setAttribute("class", "addbtn");
+
+    addbtn.innerText = "Add To collection";
+    imgbtn.innerText = "Open image";
+
+    // Add transition styles to the buttons
+    addbtn.style.transition = "opacity 1s ease-in-out, box-shadow 1s ease-in-out";
+    imgbtn.style.transition = "opacity 1s ease-in-out, box-shadow 1s ease-in-out";
+
+    buttonsList.appendChild(addbtn);
+    buttonsList.appendChild(imgbtn);
+
     image.addEventListener('mouseenter', () => {
-        image.appendChild(addbtn);
-        image.appendChild(imgbtn);
-        // console.log(image);
+        image.appendChild(buttonsList);
     });
+
     image.addEventListener('mouseleave', () => {
-        addbtn.remove();
-        imgbtn.remove();
-        // console.log(image);
+        image.removeChild(buttonsList);
     });
-    addbtn.addEventListener("click",()=>{
+
+    addbtn.addEventListener("click", () => {
         console.log("clicked");
-    })
-    imgbtn.addEventListener("click",()=>{
+    });
+
+    imgbtn.addEventListener("click", () => {
         window.open(image.firstElementChild.getAttribute("src"));
-    })
+    });
 });
 
 window.onload=()=>{
