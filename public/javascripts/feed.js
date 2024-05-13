@@ -3,36 +3,46 @@
 const img=document.querySelectorAll(".box");
 img.forEach(image => {
    const caption= image.firstElementChild.nextElementSibling;
-   console.log(caption);
+   //console.log(caption);
     const addbtn=document.createElement("button");
     const imgbtn=document.createElement("button");
+    addbtn.classList="addbtn";
+    imgbtn.classList="addbtn";
     addbtn.innerText="Add To collection";
     imgbtn.innerText="Open image";
     image.addEventListener('mouseenter', () => {
         image.appendChild(addbtn);
         image.appendChild(imgbtn);
-        // console.log(image);
     });
+
     image.addEventListener('mouseleave', () => {
         addbtn.remove();
         imgbtn.remove();
         // console.log(image);
     });
     addbtn.addEventListener("click",async()=>{
-        const res=await fetch("/addCollection",{
-            method:"Post",
-            headers:{
-                "content-type":"application/json"
-            },
-            body:JSON.stringify({src:image.firstElementChild.getAttribute("src"),
-                caption:caption.innerText
+        try{
+            const res=await fetch("/addCollection",{
+                method:"Post",
+                headers:{
+                    "content-type":"application/json"
+                },
+                body:JSON.stringify({src:image.firstElementChild.getAttribute("src"),
+                    caption:caption.innerText
+                })
             })
-        })
-        console.log(res.status);
+            // console.log(res.status);
+            if (res.redirected) {
+                window.location.href = res.url;
+            }
+        }
+        catch(err){
+            console.log(err);
+        }
     })
     imgbtn.addEventListener("click",()=>{
         window.open(image.firstElementChild.getAttribute("src"));
-    })
+    });
 });
 
 window.onload=()=>{
@@ -76,6 +86,8 @@ function Addimage(arr){
 
     const addbtn=document.createElement("button");
     const imgbtn=document.createElement("button");
+    addbtn.classList="addbtn";
+    imgbtn.classList="addbtn";
     addbtn.innerText="Add To collection";
     imgbtn.innerText="Open image";
     div.addEventListener('mouseenter', () => {

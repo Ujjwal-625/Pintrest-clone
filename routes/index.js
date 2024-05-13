@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 router.use(express.urlencoded({extended:true}));
 
-
+const ObjectId = require('mongoose').Types.ObjectId;
 const userModel=require("./users");
 const postModel=require("./post");
 const userCollection=require("./userCollection");
@@ -36,6 +36,24 @@ router.post("/upload",isLoggedIN,upload.single("post"),async(req,res)=>{
   console.log("done");
   res.redirect("/profile");
 })
+
+//updating the post
+
+router.post("/updatePost",isLoggedIN,upload.single("post"),async(req,res)=>{
+  if(!req.file){
+  return res.status(400).send("NO file were uploaded");
+  }
+  const id=req.body.id;
+  //console.log(req.body);
+  // console.log(req.file.filename);
+   //fileter,update
+  const post=await postModel.findOneAndUpdate({_id:new ObjectId(id)},{caption:req.body.caption,
+    image:req.file.filename,
+    postDate:Date.now()})
+  console.log("done");
+  res.redirect("/profile");
+})
+
 
 router.get('/', function(req, res, next) {
   res.render('index',{err:req.flash("error")});//same concept as done for login route
@@ -124,6 +142,8 @@ router.post("/update",isLoggedIN,upload1.single("dp"),async(req,res)=>{
   res.redirect("/profile")
 })
 
+
+
 router.post("/login",passport.authenticate("local",{
   successRedirect:"/profile",
   failureRedirect:"/login",
@@ -170,6 +190,60 @@ router.post("/addCollection",isLoggedIN,async(req,res)=>{
 router.get("/Collection",isLoggedIN,async(req,res)=>{
   const user=await userModel.findOne({username:req.session.passport.user}).populate("userCollections");
 res.render("collection",{collection:user})
+})
+
+
+//removing from the collection
+
+router.delete("/removeCollection",async(req,res)=>{
+  const user = await userModel.findOne({ username: req.session.passport.user });
+  const id = req.body.id; // Assuming you have the _id of the document
+  console.log(id);
+  
+  // Filter out the deleted id from userCollections array
+  user.userCollections = user.userCollections.filter(ele => ele.toString() !== id);
+  
+  // Save the updated user document
+  await user.save();
+  
+  // Delete the document from userCollection
+  await userCollection.deleteOne({ _id: new ObjectId(id) });
+  
+  res.redirect("/Collection");
+  
+  
+})
+
+
+//Deleting the post
+router.delete("/deletePost",async(req,res)=>{
+  try{
+    const user =await userModel.findOne({username:req.session.passport.user})
+  const id=req.body.id;
+  user.post=user.post.filter(ele=>{
+    return ele.toString()!==id;
+  })
+  
+  await user.save();
+  await postModel.deleteOne({_id:new ObjectId(id)});
+  res.redirect("/profile");
+  }
+  catch(err){
+    console.log(err);
+  }
+})
+
+//adding endpoint for post form to be loaded
+router.get("/postform",isLoggedIN,(req,res)=>{
+  res.render("Postform");
+})
+
+//adding endpoint for update post functionality
+router.get("/updatepost",isLoggedIN,(req,res)=>{
+  // console.log("in updatepost");
+  // console.log(req.query.id);
+  res.render("updatePost",{id:req.query.id});
+  //i will make this id field hidden in the form and use it update the post
 })
 
 function isLoggedIN(req,res,next){
