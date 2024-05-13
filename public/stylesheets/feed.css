@@ -24,12 +24,14 @@
   margin-bottom: 10px;
   break-inside: avoid;
   border-radius: 15px;
+  transition: opacity 1s ease-in-out, box-shadow 0.5s ease-in-out;
 }
 .container .box img
 {
   max-width: 100%;
   min-width: 100%;
   border-radius: 10px;
+  transition: opacity 1s ease-in-out, box-shadow 0.5s ease-in-out;
 }
 
 
@@ -37,6 +39,7 @@ img:hover {
   
   opacity: .95;
   box-shadow: 0 0 10px #fff;
+  transition: opacity 1s ease-in-out, box-shadow 0.5s ease-in-out;
 }
 
 .caption{
@@ -141,6 +144,19 @@ img:hover {
   {
     columns: 1;
   }
+}
+
+.addbtn{
+	background-color: white;
+	border-radius:20px;
+	width:auto;
+	padding: 5px;
+}
+
+.addbtn:hover{
+	background-color: rgb(38, 38, 38);
+	color:white;
+	box-shadow: 0 0 5px #fff;
 }
 
 

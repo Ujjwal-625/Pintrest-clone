@@ -25,12 +25,26 @@ body {
     border-radius: 50%;
     overflow: hidden;
     margin: 0 auto 20px;
+    border: 1px solid black;
+  }
+
+  .profile-picture:hover{
+    box-shadow:0px 0px 2px 3px rgba(137, 137, 137, 0.395);
   }
   
   .profile-picture img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    margin-top: -10px;
+    object-fit:cover;
+  }
+
+  .profile-picture img:hover {
+    width: 100%;
+    height: 100%;
+    margin-top: -10px;
+    object-fit:cover;
+    opacity: 0.3;
   }
   
   .name {
@@ -56,12 +70,14 @@ body {
     background-color: #f30d19;
     color: #fff;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
+    border-radius: 10px;
   }
   
   .button:hover {
-    background-color: #cf2d35;
+    background-color: #f505054a;
+    color: white;
+    box-shadow: 0 0 2px #f30d19;
+    /* transition-delay: 0.2s; */
   }
 
   .flex{
@@ -83,14 +99,89 @@ body {
   
   #update-btn {
     position: absolute;
+    top:45%;
     bottom: 10px;
-    left: 50%;
+    left: 49%;
     transform: translateX(-50%);
     display: none;
+
   }
+
+  #upd:hover{
+    opacity: 0.3;
+
+  }
+
+  #update-btn:hover {
+    opacity: 0.4;
+  }
+
+
   
   .image-container:hover #update-btn {
     display: block;
   }
   
  
+
+  /* //------------------------------------------------------- */
+
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .card {
+    width: 18rem;
+    margin: 0.5rem;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  
+  .card-img-top {
+    width: 100%;
+    height: auto;
+  }
+  
+  .card-body {
+    text-align: center;
+  }
+  
+ .image-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.card:hover.image-buttons {
+  opacity: 1;
+  visibility: visible;
+}
+
+.update-button,
+.delete-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 1px solid black;
+  cursor: pointer;
+}
+
+.update-button {
+  background-color: #4CAF50;
+  color:black;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: black;
+}
