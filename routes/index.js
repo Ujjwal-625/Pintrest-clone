@@ -5,7 +5,7 @@ router.use(express.urlencoded({extended:true}));
 
 const userModel=require("./users");
 const postModel=require("./post");
-const userCollection=require("./collections");
+const userCollection=require("./userCollection");
 const passport=require("passport");
 const localStrategy=require("passport-local");
 passport.use(new localStrategy(userModel.authenticate()));
@@ -148,6 +148,29 @@ router.get('/logout',(req,res,next)=>{
   })
 })
 
+// Add to collection
+router.post("/addCollection",isLoggedIN,async(req,res)=>{
+  const user=await userModel.findOne({username:req.session.passport.user})
+  const uCollection=await userCollection.create({
+    caption:req.body.caption,
+    user:user._id,
+    img:req.body.src //it will contain the new uniqu name of the image
+  })
+
+  // now we will add post id in post array of user 
+  user.userCollections.push(uCollection._id);
+  await user.save();
+  console.log("done");
+  res.redirect("/Collection");
+})
+
+
+// route to collections
+
+router.get("/Collection",isLoggedIN,async(req,res)=>{
+  const user=await userModel.findOne({username:req.session.passport.user}).populate("userCollections");
+res.render("collection",{collection:user})
+})
 
 function isLoggedIN(req,res,next){
   if(req.isAuthenticated()){

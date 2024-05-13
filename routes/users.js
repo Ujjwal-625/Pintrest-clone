@@ -29,7 +29,11 @@ const userSchema=mongoose.Schema({
   post:[{
       type:mongoose.Schema.Types.ObjectId,
       ref:'Post'
-    }]
+    }],
+  userCollections:[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"usercollection"
+  }]
 })
 
 userSchema.plugin(plm);

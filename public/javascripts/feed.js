@@ -2,6 +2,8 @@
 
 const img=document.querySelectorAll(".box");
 img.forEach(image => {
+   const caption= image.firstElementChild.nextElementSibling;
+   console.log(caption);
     const addbtn=document.createElement("button");
     const imgbtn=document.createElement("button");
     addbtn.innerText="Add To collection";
@@ -16,8 +18,17 @@ img.forEach(image => {
         imgbtn.remove();
         // console.log(image);
     });
-    addbtn.addEventListener("click",()=>{
-        console.log("clicked");
+    addbtn.addEventListener("click",async()=>{
+        const res=await fetch("/addCollection",{
+            method:"Post",
+            headers:{
+                "content-type":"application/json"
+            },
+            body:JSON.stringify({src:image.firstElementChild.getAttribute("src"),
+                caption:caption.innerText
+            })
+        })
+        console.log(res.status);
     })
     imgbtn.addEventListener("click",()=>{
         window.open(image.firstElementChild.getAttribute("src"));
@@ -49,10 +60,8 @@ btn.addEventListener("click",async()=>{
 
 function Addimage(arr){
     arr.forEach((ele)=>{
-        const div = document.createElement("a");
-        div.style.textDecoration="none";  
+        const div = document.createElement("div");
         div.classList="box";
-        div.href=ele.download_url;
         const img =document.createElement("img");
         img.src=ele.download_url;
         img.alt="Somthing went wrong";
@@ -64,5 +73,35 @@ function Addimage(arr){
         div.appendChild(img);
         div.appendChild(caption);
         imgdiv.appendChild(div);
+
+    const addbtn=document.createElement("button");
+    const imgbtn=document.createElement("button");
+    addbtn.innerText="Add To collection";
+    imgbtn.innerText="Open image";
+    div.addEventListener('mouseenter', () => {
+        div.appendChild(addbtn);
+        div.appendChild(imgbtn);
+        // console.log(image);
+    });
+    div.addEventListener('mouseleave', () => {
+        addbtn.remove();
+        imgbtn.remove();
+        // console.log(image);
+    });
+    addbtn.addEventListener("click",async()=>{
+        const res=await fetch("/addCollection",{
+            method:"Post",
+            headers:{
+                "content-type":"application/json"
+            },
+            body:JSON.stringify({src:img.getAttribute("src"),
+                caption:caption.innerText
+            })
+        })
+        console.log(res.status);
+    })
+    imgbtn.addEventListener("click",()=>{
+        window.open(img.getAttribute("src"));
+    })
     })
 }
