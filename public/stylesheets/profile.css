@@ -185,3 +185,24 @@ body {
   background-color: #f44336;
   color: black;
 }
+
+.addbtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+  background-color: #f30d19;
+  width: 100%;
+  margin: 7px 0px;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: 30px;
+  border: none;
+}
+
+.addbtn:HOVER{
+  background-color: #f505054a;
+    transform:  scale( 1);
+}

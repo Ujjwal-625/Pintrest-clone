@@ -148,7 +148,7 @@ img:hover {
 
 .addbtn{
 	background-color: white;
-	border-radius:20px;
+	border-radius:10px;
 	width:auto;
 	padding: 5px;
 }
@@ -160,4 +160,19 @@ img:hover {
 }
 
 
-/* hover functionality on the image  */
+.button {
+	margin-left: 10px;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f30d19;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+  }
+  
+  .button:hover {
+    background-color: #f505054a;
+    color: white;
+    box-shadow: 0 0 2px white;
+    /* transition-delay: 0.2s; */
+  }

@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Add Post</title>
 </head>
-<link rel="stylesheet" href="/stylesheets/style.css">
+<link rel="stylesheet" href="/stylesheets/postform.css">
 
 <body>
+  <a href="/profile"><button class="button" style="margin:5px 5px 5px 5px; border:none;">Back</button></a>
   <div class="container">
     <div class="content">
       <!--pinterest logo-->
@@ -15,9 +16,15 @@
       <p class="header">Add Post</p>
 
       <form id="postform" style="display: inline;" action="/upload" method="post" enctype="multipart/form-data">
-        <input class="detail" type="file" id="post" name="post">
-        <label class="detail" for="caption">Caption</label>
+        <label for="detail" class="custom-file-input">Choose File</label>
+        <input id="detail" type="file" name="post" class="custom-file-label">
+
+        <br>
+        <br>
+        <label id="size" for="caption">Caption</label>
         <input class="detail" type="text" id="caption" name="caption" placeholder="Image Caption">
+        <br>
+        <br>
         <input class="btn int" type="submit" value="Add Post">
       </form>
     </div>
